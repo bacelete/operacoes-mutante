@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "_comment": "Configuracao equivalente a gerada por `npx stryker init` (preset: nenhum, test runner: jest, npm, reporters html/clear-text/progress). Saiba mais: https://stryker-mutator.io/docs/stryker-js/configuration",
+  "packageManager": "npm",
+  "testRunner": "jest",
+  "coverageAnalysis": "perTest",
+  "mutate": ["src/**/*.js"],
+  "reporters": ["html", "clear-text", "progress", "json"],
+  "htmlReporter": { "fileName": "reports/mutation/mutation.html" },
+  "jsonReporter": { "fileName": "reports/mutation/mutation.json" }
+}

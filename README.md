@@ -2,6 +2,27 @@
 
 Bem-vindo ao trabalho prático de Teste de Mutação. O objetivo deste projeto é usar a ferramenta StrykerJS para avaliar e fortalecer uma suíte de testes que, à primeira vista, parece boa.
 
+## Resultado deste fork
+
+| | Inicial | Final |
+|---|---:|---:|
+| Testes | 50 | 76 |
+| Cobertura de linhas | 98,64% | 100% |
+| Cobertura de branches | 58,82% | 100% |
+| **Mutation score (StrykerJS)** | **73,71%** | **98,12%** |
+
+```bash
+npm install
+npm test               # 76 testes
+npm run coverage       # cobertura
+npm run mutate         # StrykerJS -> reports/mutation/mutation.html
+```
+
+- Os testes novos ficam em [`test/operacoes.mutantes.test.js`](test/operacoes.mutantes.test.js), cada um anotado com a linha e o mutante que mata. A suíte original (`test/operacoes.test.js`) não foi alterada.
+- A configuração do Stryker está em [`stryker.conf.json`](stryker.conf.json). Foi usada a versão 7, compatível com Node 16 ou mais recente.
+- Os 4 mutantes restantes (linha 19, guarda `n === 0 || n === 1` do fatorial) são **equivalentes**: sem a guarda, o laço já devolve 1 para 0 e 1, então nenhum teste pode matá-los.
+- O relatório da entrega está em [`docs/Relatorio_Teste_de_Mutacao.pdf`](docs/Relatorio_Teste_de_Mutacao.pdf). As evidências (saídas do Jest e do Stryker, relatórios HTML inicial e final, screenshots) estão em [`docs/`](docs/).
+
 ## Contexto
 
 Este repositório contém uma biblioteca de cálculos simples. A suíte de testes inicial em `__tests__/` foi projetada para ter uma alta **cobertura de código**, mas esconde fraquezas que só o **teste de mutação** pode revelar.

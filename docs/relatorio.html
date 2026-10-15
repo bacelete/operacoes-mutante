@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Relatório — Teste de Mutação com StrykerJS</title>
+<style>
+  @page { size: A4; margin: 14mm 16mm 13mm 16mm; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.8pt; line-height: 1.36; color: #1d1d1f; }
+  h1 { font-size: 13.5pt; margin: 9pt 0 4pt; color: #12355b; }
+  h2 { font-size: 12pt; margin: 10pt 0 4pt; color: #12355b; border-bottom: 1px solid #c9d3df; padding-bottom: 2pt; }
+  h3 { font-size: 10.5pt; margin: 9pt 0 3pt; }
+  p { margin: 0 0 6pt; text-align: justify; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 9.2pt; background: #f1f3f6; padding: 0 2px; border-radius: 2px; }
+  table { border-collapse: collapse; width: 100%; margin: 4pt 0 8pt; font-size: 9.4pt; }
+  th, td { border: 1px solid #c9d3df; padding: 3pt 6pt; text-align: center; }
+  th { background: #eef2f7; }
+  td:first-child, th:first-child { text-align: left; }
+  figure { margin: 4pt 0 6pt; text-align: center; }
+  figure img { width: 84%; border: 1px solid #c9d3df; }
+  figure.resumo img { width: 100%; }
+  figcaption { font-size: 8.6pt; color: #555; margin-top: 2pt; }
+  ul { margin: 0 0 6pt 16pt; padding: 0; }
+  li { margin-bottom: 2pt; }
+  .capa { height: 262mm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; page-break-after: always; }
+  .capa .topo { font-size: 12pt; letter-spacing: .5px; margin-top: 20mm; }
+  .capa .titulo { font-size: 22pt; font-weight: 600; color: #12355b; }
+  .capa .sub { font-size: 12pt; color: #444; margin-top: 6pt; }
+  .capa .autor { font-size: 12pt; line-height: 1.8; margin-bottom: 20mm; }
+  .destaque { background: #f5f8fc; border-left: 3px solid #12355b; padding: 5pt 8pt; margin: 6pt 0 8pt; }
+  .quebra { page-break-before: always; }
+  .num { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<section class="capa">
+  <div class="topo">Teste de Software</div>
+  <div>
+    <div class="titulo">Análise de Eficácia de Testes<br>com Teste de Mutação</div>
+    <div class="sub">StrykerJS aplicado ao projeto <em>operacoes-mutante</em></div>
+  </div>
+  <div class="autor">
+    <b>Arthur Henrique Teixeira e Silva Bacelete</b><br>
+    Matrícula: 859123<br>
+    Repositório: <a href="https://github.com/bacelete/operacoes-mutante">github.com/bacelete/operacoes-mutante</a><br>
+    Outubro de 2026
+  </div>
+</section>
+
+<h1>1. Análise inicial</h1>
+<p>O projeto é uma biblioteca de 50 funções matemáticas (<code>src/operacoes.js</code>) com uma suíte Jest de 50 testes, um por função. A configuração do StrykerJS (<code>stryker.conf.json</code>) usa o <em>jest-runner</em>, análise de cobertura <code>perTest</code> e muta <code>src/**/*.js</code>. Foi usada a versão 7.3, a mais recente compatível com o Node 16 do ambiente.</p>
+
+<table class="num">
+  <tr><th>Métrica (suíte original)</th><th>Valor</th></tr>
+  <tr><td>Cobertura de linhas</td><td><b>98,64%</b></td></tr>
+  <tr><td>Cobertura de funções</td><td>100%</td></tr>
+  <tr><td>Cobertura de statements</td><td>85,41%</td></tr>
+  <tr><td>Cobertura de branches</td><td>58,82%</td></tr>
+  <tr><td><b>Mutation score</b> (213 mutantes: 153 mortos, 4 timeout, 44 sobreviventes, 12 sem cobertura)</td><td><b>73,71%</b></td></tr>
+</table>
+
+<figure class="resumo">
+  <img src="img/01_relatorio_inicial_resumo.png" alt="Resumo inicial do StrykerJS">
+  <figcaption>Figura 1 — Relatório inicial do StrykerJS: 73,71% de mutation score, com 56 mutantes não detectados.</figcaption>
+</figure>
+
+<p><b>Discrepância.</b> A cobertura de linhas diz que quase todo o código é <em>executado</em> pelos testes. O mutation score diz que um em cada quatro defeitos introduzidos no código passa despercebido. A diferença existe porque cobertura mede execução, não verificação. Cada teste original chama a função com <b>uma única entrada "fácil"</b> e confere o resultado. A linha é executada, mas os testes nunca exercitam o caso de fronteira, o resultado negativo de um predicado ou a mensagem de erro. Os 58,82% de branches já sugeriam o problema: metade dos caminhos de decisão nunca é testada, embora as linhas que os contêm apareçam como cobertas.</p>
+
+<p>Os 56 mutantes vivos caem em quatro padrões: (i) <b>fronteiras não testadas</b> (<code>&lt;</code> → <code>&lt;=</code> em <code>raizQuadrada</code>, <code>fatorial</code>, <code>isPrimo</code>, <code>clamp</code>, <code>isMaiorQue</code>); (ii) <b>predicados testados só no caso verdadeiro</b> (<code>isPar</code>, <code>isImpar</code>, <code>isDivisivel</code>, <code>isEqual</code> trocados por <code>return true</code>); (iii) <b>erros sem verificação de mensagem</b> ou nunca disparados (mensagens trocadas por <code>""</code>, <code>if</code> de guarda removido); (iv) <b>entradas que mascaram o operador</b> (ponto fixo 0 °C = 32 °F; array já ordenado).</p>
+
+<h1>2. Análise de mutantes críticos</h1>
+
+<h3>Mutante 1 — fronteira em <code>raizQuadrada</code> (linha 13, EqualityOperator)</h3>
+<figure>
+  <img src="img/02_mutante_raiz_fronteira.png" alt="Mutante n < 0 para n <= 0">
+  <figcaption>Figura 2 — <code>n &lt; 0</code> trocado por <code>n &lt;= 0</code>: coberto por 1 teste e mesmo assim sobreviveu.</figcaption>
+</figure>
+<p>A mutação passa a rejeitar o zero: <code>raizQuadrada(0)</code> lançaria "não é possível calcular a raiz de um número negativo". O único teste da função usa <code>raizQuadrada(16)</code>, valor longe da fronteira, para o qual <code>16 &lt; 0</code> e <code>16 &lt;= 0</code> são ambos falsos. O teste executa a linha, mas não a decisão que ela contém. É o defeito clássico de "<em>off-by-one</em>" que a cobertura de linhas não enxerga.</p>
+
+<h3>Mutante 2 — operador mascarado em <code>celsiusParaFahrenheit</code> (linha 93, ArithmeticOperator)</h3>
+<figure>
+  <img src="img/03_mutante_celsius_operador.png" alt="Mutante celsius * 9/5 para celsius * 9 * 5">
+  <figcaption>Figura 3 — <code>celsius * 9/5</code> trocado por <code>celsius * 9 * 5</code>: sobreviveu.</figcaption>
+</figure>
+<p>O teste original verifica só <code>celsiusParaFahrenheit(0) === 32</code>. Com <code>celsius = 0</code>, <code>0 * 9/5</code>, <code>0 * 9 * 5</code> e <code>0 / 9</code> valem todos 0, então <b>qualquer</b> troca no fator de conversão sobrevive. A entrada escolhida é um ponto em que o termo multiplicativo se anula. O mesmo acontece em <code>fahrenheitParaCelsius(32)</code>.</p>
+
+<h3>Mutante 3 — ordenação removida em <code>medianaArray</code> (linha 109, MethodExpression)</h3>
+<figure>
+  <img src="img/04_mutante_mediana_sort.png" alt="Mutante que remove o sort">
+  <figcaption>Figura 4 — <code>[...numeros].sort((a, b) =&gt; a - b)</code> trocado por <code>[...numeros]</code>: sobreviveu.</figcaption>
+</figure>
+<p>O teste usa <code>medianaArray([1, 2, 3, 4, 5])</code>, um array <b>já ordenado</b> e de tamanho ímpar. Sem o <code>sort</code>, o elemento do meio continua sendo 3. Também sobrevivem o comparador <code>() =&gt; undefined</code> e <code>a + b</code>, e o corpo do ramo de tamanho par (linhas 111–112) nunca é executado (4 mutantes <em>NoCoverage</em>). A suíte não verifica a parte mais importante da função: ordenar antes de escolher o meio.</p>
+
+<h1>3. Solução implementada</h1>
+<p>A suíte original foi mantida intacta. Foram adicionados <b>26 testes</b> em <code>test/operacoes.mutantes.test.js</code>, cada um anotado com a linha e o mutante que mata (total: 76 testes, todos passando no código original). Para os mutantes analisados:</p>
+<ul>
+  <li><b>Fronteira:</b> <code>expect(raizQuadrada(0)).toBe(0)</code> e <code>fatorial(0) === 1</code>. O zero é exatamente o valor em que <code>&lt;</code> e <code>&lt;=</code> divergem. Erros passaram a ser conferidos com a mensagem: <code>toThrow('raiz quadrada de um número negativo')</code>.</li>
+  <li><b>Operador:</b> <code>celsiusParaFahrenheit(100) === 212</code>, <code>celsiusParaFahrenheit(-40) === -40</code> e <code>fahrenheitParaCelsius(212) === 100</code>. Longe do ponto fixo, cada operador produz um valor diferente.</li>
+  <li><b>Mediana:</b> <code>medianaArray([5, 1, 3]) === 3</code> (entrada desordenada), <code>[3, -1, 2, -5] → 0,5</code> (negativos, mata o comparador <code>a + b</code>) e <code>[4, 1, 3, 2] → 2,5</code> (tamanho par, cobre e mata os mutantes das linhas 111–112).</li>
+</ul>
+<p>Os demais seguem a mesma lógica: o <b>caso falso</b> de cada predicado (<code>isPar(7) === false</code>, <code>isMaiorQue(5, 5) === false</code>); <code>isPrimo(1)</code>, <code>isPrimo(4)</code> e <code>isPrimo(9)</code> para o laço e a guarda; arrays vazios em <code>mediaArray</code>, <code>maximoArray</code>, <code>minimoArray</code> e <code>medianaArray</code>; e os limites inferior e superior de <code>clamp</code>. Esses testes são eficazes porque cada um foi escolhido para produzir <b>resultados diferentes no código original e no mutado</b>, e não apenas para executar a linha.</p>
+
+<div class="destaque"><b>Mutantes equivalentes.</b> Os 4 mutantes da linha 19 (<code>if (n === 0 || n === 1) return 1</code> do fatorial) nunca podem ser mortos: sem essa guarda, o laço <code>for (i = 2; i &lt;= n; …)</code> não executa para 0 e 1 e o resultado continua sendo 1. O código mutado é <b>semanticamente idêntico</b> ao original. Dois casos são quase equivalentes. Em <code>produtoArray</code>, o <code>if</code> de array vazio é redundante, porque <code>[].reduce(…, 1)</code> já devolve 1; ele só foi morto com um <em>array-like</em> vazio (<code>{ length: 0 }</code>), que expõe a dependência de <code>reduce</code>. Em <code>clamp</code>, <code>&lt;</code> → <code>&lt;=</code> só é distinguível com <code>-0</code>, pois o <code>toBe</code> do Jest usa <code>Object.is</code>. Esses três testes verificam contratos reais, mas são mais artificiais do que os demais, e isso é registrado aqui com transparência.</div>
+
+<h1>4. Resultados finais</h1>
+<table class="num">
+  <tr><th>Métrica</th><th>Inicial</th><th>Final</th></tr>
+  <tr><td>Testes</td><td>50</td><td>76</td></tr>
+  <tr><td>Cobertura de linhas / funções</td><td>98,64% / 100%</td><td>100% / 100%</td></tr>
+  <tr><td>Cobertura de statements / branches</td><td>85,41% / 58,82%</td><td>100% / 100%</td></tr>
+  <tr><td>Mutantes mortos + timeout</td><td>157</td><td>209</td></tr>
+  <tr><td>Sobreviventes / sem cobertura</td><td>44 / 12</td><td>4 / 0</td></tr>
+  <tr><td><b>Mutation score</b></td><td><b>73,71%</b></td><td><b>98,12%</b></td></tr>
+</table>
+<figure class="resumo">
+  <img src="img/05_relatorio_final_resumo.png" alt="Resumo final do StrykerJS">
+  <figcaption>Figura 5 — Relatório final: 98,12% (meta: &gt; 98%). Os 4 restantes são os mutantes equivalentes da linha 19.</figcaption>
+</figure>
+
+<h1>5. Conclusão</h1>
+<p>A cobertura de código responde "o código foi executado?"; o teste de mutação responde "se o código estivesse errado, algum teste perceberia?". Neste projeto, 98,64% de cobertura de linhas conviviam com 26% dos defeitos simulados passando despercebidos. A melhoria não veio de executar mais código (a cobertura de linhas mal mudou), mas de escolher <b>entradas e asserções que discriminam</b>: fronteiras, casos negativos, mensagens de erro e entradas que não anulam os operadores. O teste de mutação também mostra seus limites. Mutantes equivalentes exigem análise humana e podem impedir 100%, e o custo computacional é maior (213 execuções da suíte, cerca de 50 s aqui). Ainda assim, ele avalia a qualidade da suíte de forma muito mais fiel do que a cobertura e funciona como um guia concreto de quais testes faltam.</p>
+
+</body>
+</html>

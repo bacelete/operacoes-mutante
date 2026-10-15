@@ -1,0 +1,135 @@
+13:24:43 (24660) INFO ProjectReader Found 1 of 25 file(s) to be mutated.
+13:24:44 (24660) INFO Instrumenter Instrumented 1 source file(s) with 213 mutant(s)
+13:24:44 (24660) INFO ConcurrencyTokenProvider Creating 13 test runner process(es).
+13:24:46 (24660) INFO BroadcastReporter Detected that current console does not support the "progress" reporter, downgrading to "progress-append-only" reporter
+13:24:48 (24660) INFO DryRunExecutor Starting initial test run (jest test runner with "perTest" coverage analysis). This may take a while.
+13:24:51 (24660) INFO DryRunExecutor Initial test run succeeded. Ran 76 tests in 2 seconds (net 159 ms, overhead 2595 ms).
+Mutation testing 61% (elapsed: <1m, remaining: <1m) 48/213 tested (4 survived, 1 timed out)
+Mutation testing 74% (elapsed: <1m, remaining: <1m) 141/213 tested (4 survived, 4 timed out)
+
+All tests
+  operacoes.mutantes.test.js
+    ✓ Bloco 1 — fronteiras e mensagens de erro divisao por zero informa o motivo (L8: mensagem trocada por "") [line 17] (killed 1)
+    ✓ Bloco 1 — fronteiras e mensagens de erro raizQuadrada de 0 é 0, não erro (L13: n < 0 → n <= 0) [line 21] (killed 1)
+    ✓ Bloco 1 — fronteiras e mensagens de erro raizQuadrada de negativo lança erro com mensagem (L13: if removido; mensagem "") [line 25] (killed 2)
+    ✓ Bloco 1 — fronteiras e mensagens de erro fatorial de 0 e de 1 é 1 (L18: n < 0 → n <= 0) [line 29] (killed 7)
+    ✓ Bloco 1 — fronteiras e mensagens de erro fatorial de negativo lança erro com mensagem (L18: if removido; mensagem "") [line 35] (killed 2)
+    ✓ Bloco 1 — fronteiras e mensagens de erro média de array vazio é 0, não NaN (L25: if removido → 0/0) [line 39] (killed 3)
+    ✓ Bloco 1 — fronteiras e mensagens de erro máximo e mínimo de array vazio lançam erro com mensagem (L34/L38) [line 43] (killed 7)
+    ✓ Bloco 2 — o outro lado dos predicados isPar devolve false para ímpar e true para 0 (L43: return true) [line 50] (killed 4)
+    ✓ Bloco 2 — o outro lado dos predicados isImpar devolve false para par (L44: return true; n % 2 → n * 2) [line 55] (killed 5)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões 0 e 1 não são primos (L73: n <= 1 → n < 1; if removido; return true) [line 62] (killed 4)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões compostos não são primos (L74: laço removido/i >= n; L75: n % i → n * i, return true) [line 68] (killed 10)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões produto de array vazio é 1 (contrato do elemento neutro) [line 75] (killed 1)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões produto de coleção vazia é 1 sem depender de reduce (L84: if removido) [line 80] (killed 2)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões clamp prende valores abaixo do mínimo e acima do máximo (L88/L89: if removido) [line 87] (killed 5)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões clamp devolve o próprio valor quando ele está exatamente no limite (L88/L89: < → <=, > → >=) [line 92] (killed 2)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões isDivisivel devolve false quando há resto (L92: return true) [line 99] (killed 3)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões conversões de temperatura fora do ponto 0/32 (L93/L94: * 9/5 → * 9 * 5 ou / 9) [line 103] (killed 6)
+    ✓ Bloco 4 — teoria dos números, intervalos e conversões inverso de zero lança erro com mensagem (L96: if removido; mensagem "") [line 109] (killed 2)
+    ✓ Bloco 5 — comparações e mediana isMaiorQue é falso para menor e para igual (L104: return true; > → >=) [line 115] (killed 3)
+    ✓ Bloco 5 — comparações e mediana isMenorQue é falso para maior e para igual (L105: return true; < → <=) [line 120] (killed 3)
+    ✓ Bloco 5 — comparações e mediana isEqual é falso para valores diferentes (L106: return true) [line 125] (killed 2)
+    ✓ Bloco 5 — comparações e mediana mediana de array vazio lança erro com mensagem (L108) [line 129] (killed 4)
+    ✓ Bloco 5 — comparações e mediana mediana ordena antes de escolher o meio (L109: sort removido; comparador () => undefined) [line 133] (killed 5)
+    ✓ Bloco 5 — comparações e mediana mediana ordena numericamente com negativos (L109: a - b → a + b) [line 137] (killed 6)
+    ~ Bloco 5 — comparações e mediana mediana de tamanho par é a média dos dois centrais (L111: paridade; L112: / → *, + → -, mid - 1 → mid + 1) [line 141] (covered 17)
+    ~ Bloco 5 — comparações e mediana a mediana não altera o array recebido [line 146] (covered 13)
+  operacoes.test.js
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 1. deve somar dois números positivos [line 15] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 2. deve subtrair dois números positivos [line 16] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 3. deve multiplicar dois números positivos [line 17] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 4. deve dividir e lançar erro para divisão por zero [line 18] (killed 5)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 5. deve calcular a potência com expoente positivo [line 22] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 6. deve calcular a raiz quadrada de um quadrado perfeito [line 23] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 7. deve retornar o resto da divisão [line 24] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 8. deve calcular o fatorial de um número maior que 1 [line 25] (killed 5)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 9. deve calcular a média de um array com múltiplos elementos [line 26] (killed 5)
+    ~ Suíte de Testes Fraca para 50 Operações Aritméticas 10. deve somar um array com múltiplos elementos [line 27] (covered 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 11. deve encontrar o valor máximo em um array [line 30] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 12. deve encontrar o valor mínimo em um array [line 31] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 13. deve retornar o valor absoluto de um número negativo [line 32] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 14. deve arredondar um número para cima [line 33] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 15. deve retornar true para um número par [line 34] (killed 1)
+    ~ Suíte de Testes Fraca para 50 Operações Aritméticas 16. deve retornar true para um número ímpar [line 35] (covered 5)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 17. deve calcular uma porcentagem simples [line 36] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 18. deve aumentar um valor em uma porcentagem [line 37] (killed 4)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 19. deve diminuir um valor em uma porcentagem [line 38] (killed 4)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 20. deve inverter o sinal de um número positivo [line 39] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 21. deve calcular o seno de 0 [line 42] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 22. deve calcular o cosseno de 0 [line 43] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 23. deve calcular a tangente de 0 [line 44] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 24. deve calcular o logaritmo natural de Euler [line 45] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 25. deve calcular o logaritmo na base 10 [line 46] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 26. deve arredondar para baixo [line 47] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 27. deve arredondar para cima [line 48] (killed 1)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 28. deve calcular a hipotenusa de um triângulo retângulo [line 49] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 29. deve converter graus para radianos [line 50] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 30. deve converter radianos para graus [line 51] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 31. deve calcular o MDC de dois números [line 54] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 32. deve calcular o MMC de dois números [line 55] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 33. deve verificar que um número é primo [line 56] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 34. deve calcular o 10º termo de Fibonacci [line 57] (killed 7)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 35. deve calcular o produto de um array [line 58] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 36. deve manter um valor dentro de um intervalo (clamp) [line 59] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 37. deve verificar se um número é divisível por outro [line 60] (killed 2)
+    ~ Suíte de Testes Fraca para 50 Operações Aritméticas 38. deve converter Celsius para Fahrenheit [line 61] (covered 4)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 39. deve converter Fahrenheit para Celsius [line 62] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 40. deve calcular o inverso de um número [line 63] (killed 4)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 41. deve calcular a área de um círculo [line 66] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 42. deve calcular a área de um retângulo [line 67] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 43. deve calcular o perímetro de um retângulo [line 68] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 44. deve verificar se um número é maior que outro [line 69] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 45. deve verificar se um número é menor que outro [line 70] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 46. deve verificar se dois números são iguais [line 71] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 47. deve calcular a mediana de um array ímpar e ordenado [line 72] (killed 3)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 48. deve calcular o dobro de um número [line 73] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 49. deve calcular o triplo de um número [line 74] (killed 2)
+    ✓ Suíte de Testes Fraca para 50 Operações Aritméticas 50. deve calcular a metade de um número [line 75] (killed 2)
+
+[Survived] LogicalOperator
+src/operacoes.js:19:7
+-     if (n === 0 || n === 1) return 1;
++     if (n === 0 && n === 1) return 1;
+Tests ran:
+    Suíte de Testes Fraca para 50 Operações Aritméticas 8. deve calcular o fatorial de um número maior que 1
+    Bloco 1 — fronteiras e mensagens de erro fatorial de 0 e de 1 é 1 (L18: n < 0 → n <= 0)
+
+
+[Survived] ConditionalExpression
+src/operacoes.js:19:18
+-     if (n === 0 || n === 1) return 1;
++     if (n === 0 || false) return 1;
+Tests ran:
+    Suíte de Testes Fraca para 50 Operações Aritméticas 8. deve calcular o fatorial de um número maior que 1
+    Bloco 1 — fronteiras e mensagens de erro fatorial de 0 e de 1 é 1 (L18: n < 0 → n <= 0)
+
+
+[Survived] ConditionalExpression
+src/operacoes.js:19:7
+-     if (n === 0 || n === 1) return 1;
++     if (false) return 1;
+Tests ran:
+    Suíte de Testes Fraca para 50 Operações Aritméticas 8. deve calcular o fatorial de um número maior que 1
+    Bloco 1 — fronteiras e mensagens de erro fatorial de 0 e de 1 é 1 (L18: n < 0 → n <= 0)
+
+
+[Survived] ConditionalExpression
+src/operacoes.js:19:7
+-     if (n === 0 || n === 1) return 1;
++     if (false || n === 1) return 1;
+Tests ran:
+    Suíte de Testes Fraca para 50 Operações Aritméticas 8. deve calcular o fatorial de um número maior que 1
+    Bloco 1 — fronteiras e mensagens de erro fatorial de 0 e de 1 é 1 (L18: n < 0 → n <= 0)
+
+
+Ran 2.28 tests per mutant on average.
+--------------|---------|----------|-----------|------------|----------|----------|
+File          | % score | # killed | # timeout | # survived | # no cov | # errors |
+--------------|---------|----------|-----------|------------|----------|----------|
+All files     |   98.12 |      205 |         4 |          4 |        0 |        0 |
+ operacoes.js |   98.12 |      205 |         4 |          4 |        0 |        0 |
+--------------|---------|----------|-----------|------------|----------|----------|
+13:25:19 (24660) INFO JsonReporter Your report can be found at: file:///C:/Users/arthurbacelete_frwk/Desktop/Repositorios%20PUC%20MG/operacoes-mutante/reports/mutation/mutation.json
+13:25:19 (24660) INFO HtmlReporter Your report can be found at: file:///C:/Users/arthurbacelete_frwk/Desktop/Repositorios%20PUC%20MG/operacoes-mutante/reports/mutation/mutation.html
+13:25:19 (24660) INFO MutationTestExecutor Done in 36 seconds.
